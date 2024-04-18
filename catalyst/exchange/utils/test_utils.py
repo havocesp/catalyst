@@ -1,5 +1,4 @@
 import os
-import random
 import tempfile
 
 from catalyst.assets._assets import TradingPair
@@ -7,6 +6,7 @@ from catalyst.exchange.exchange_bundle import ExchangeBundle
 from catalyst.exchange.utils.exchange_utils import get_exchange_folder
 from catalyst.exchange.utils.factory import find_exchanges
 from catalyst.utils.paths import ensure_directory
+import secrets
 
 
 def handle_exchange_error(exchange, e):
@@ -35,7 +35,7 @@ def select_random_exchanges(population=3, features=None,
         if len(all_exchanges) < population:
             population = len(all_exchanges)
 
-        exchanges = random.sample(all_exchanges, population)
+        exchanges = secrets.SystemRandom().sample(all_exchanges, population)
 
     else:
         exchanges = all_exchanges
@@ -44,7 +44,7 @@ def select_random_exchanges(population=3, features=None,
 
 
 def select_random_assets(all_assets, population=3):
-    assets = random.sample(all_assets, population)
+    assets = secrets.SystemRandom().sample(all_assets, population)
     return assets
 
 

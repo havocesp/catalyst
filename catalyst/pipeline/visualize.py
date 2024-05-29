@@ -15,6 +15,7 @@ from six import iteritems
 from catalyst.pipeline.data import BoundColumn
 from catalyst.pipeline import Filter, Factor, Classifier, Term
 from catalyst.pipeline.term import AssetExists
+from security import safe_command
 
 
 class NoIPython(Exception):
@@ -129,7 +130,7 @@ def _render(g, out, format_, include_asset_exists=False):
 
     cmd = ['dot', '-T', format_]
     try:
-        proc = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        proc = safe_command.run(Popen, cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise RuntimeError(

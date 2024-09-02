@@ -3,6 +3,7 @@ import os
 import subprocess
 
 import click
+from security import safe_command
 
 py_versions = ('2.7', '3.4', '3.5')
 npy_versions = ('1.9', '1.10')
@@ -62,7 +63,7 @@ def main(upload, upload_only, allow_partial_uploads, user):
         (
             py_version,
             npy_version,
-            (subprocess.Popen(**mkargs(py_version, npy_version))
+            (safe_command.run(subprocess.Popen, **mkargs(py_version, npy_version))
              if not upload_only else
              None),
         )
@@ -85,8 +86,7 @@ def main(upload, upload_only, allow_partial_uploads, user):
                 continue
 
         if upload:
-            p = subprocess.Popen(
-                **mkargs(py_version, npy_version, output=True)
+            p = safe_command.run(subprocess.Popen, **mkargs(py_version, npy_version, output=True)
             )
             out, err = p.communicate()
             if p.returncode:

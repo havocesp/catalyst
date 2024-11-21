@@ -94,13 +94,13 @@ class PoloniexCurator(object):
                 if(f.tell() > 2):                   # Check file size is not 0
                     f.seek(0)                       # Go to start to read
                     last_tradeID, end_file = self._retrieve_tradeID_date(
-                        f.readline())
+                        f.readline(5_000_000))
                     f.seek(-2, os.SEEK_END)         # Jump to the 2nd last byte
                     while f.read(1) != b"\n":       # Until EOL is found...
                         # ...jump back the read byte plus one more.
                         f.seek(-2, os.SEEK_CUR)
                     first_tradeID, start_file = self._retrieve_tradeID_date(
-                        f.readline())
+                        f.readline(5_000_000))
 
                     if(end_file + 3600 * 6 > DT_END and
                         (first_tradeID == 1 or
@@ -353,7 +353,7 @@ class PoloniexCurator(object):
                         while f.read(1) != b"\n":   # Until EOL is found...
                             # ...jump back the read byte plus one more.
                             f.seek(-2, os.SEEK_CUR)
-                        start = pd.to_datetime(f.readline().split(',')[1],
+                        start = pd.to_datetime(f.readline(5_000_000).split(',')[1],
                                                infer_datetime_format=True)
 
                 if(start is None):

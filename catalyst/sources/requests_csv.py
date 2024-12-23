@@ -24,6 +24,7 @@ from catalyst.protocol import (
 from catalyst.assets import Equity
 
 from catalyst.constants import LOG_LEVEL
+from security import safe_requests
 
 logger = Logger('Requests Source Logger', level=LOG_LEVEL)
 
@@ -526,7 +527,7 @@ class PandasRequestsCSV(PandasCSV):
         # UnicodeEncodeError exception, so instead we'll use
         # pandas logic for decoding content
         try:
-            response = requests.get(url, **self.requests_kwargs)
+            response = safe_requests.get(url, **self.requests_kwargs)
         except requests.exceptions.ConnectionError:
             raise Exception('Could not connect to %s' % url)
 

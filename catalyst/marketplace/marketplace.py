@@ -553,7 +553,7 @@ class Marketplace:
             '{}/marketplace/ingest'.format(AUTH_SERVER),
             headers=headers,
             stream=True,
-        )
+        timeout=60)
         if r.status_code == 200:
             log.info('Dataset downloaded successfully. Processing dataset...')
             bundle_folder = get_data_source_folder(ds_name)
@@ -676,7 +676,7 @@ class Marketplace:
                 has_live=has_live,
             ),
             headers=headers,
-        )
+        timeout=60)
 
         if r.status_code != 200:
             raise MarketplaceHTTPRequest(
@@ -849,7 +849,7 @@ class Marketplace:
         headers = get_signed_headers(dataset, key, secret)
         r = requests.post('{}/marketplace/publish'.format(AUTH_SERVER),
                           files=files,
-                          headers=headers)
+                          headers=headers, timeout=60)
 
         if r.status_code != 200:
             raise MarketplaceHTTPRequest(request='upload file',

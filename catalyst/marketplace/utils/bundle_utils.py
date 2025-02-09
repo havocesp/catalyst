@@ -1,5 +1,4 @@
 import os
-import random
 import re
 import shutil
 
@@ -7,6 +6,7 @@ import bcolz
 import numpy as np
 import pandas as pd
 from six import string_types
+import secrets
 
 
 def merge_bundles(zsource, ztarget):
@@ -46,7 +46,7 @@ def sanitize_df(df):
     # Using a sampling method to identify dates for efficiency with
     # large datasets
     if len(df) > 100:
-        indexes = random.sample(range(0, len(df) - 1), 100)
+        indexes = secrets.SystemRandom().sample(range(0, len(df) - 1), 100)
     elif len(df) > 1:
         indexes = range(0, len(df) - 1)
     else:

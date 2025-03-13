@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+from security import safe_command
 
 
 def get_immediate_subdirectories(a_dir):
@@ -9,7 +10,7 @@ def get_immediate_subdirectories(a_dir):
 
 
 def iter_stdout(cmd):
-    p = subprocess.Popen(cmd,
+    p = safe_command.run(subprocess.Popen, cmd,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
 

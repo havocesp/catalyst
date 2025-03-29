@@ -7,10 +7,10 @@ from datetime import datetime
 
 import logbook
 import pandas as pd
-import requests
 
 from catalyst.exchange.utils.exchange_utils import \
     get_exchange_symbols_filename
+from security import safe_requests
 
 DT_START = int(time.mktime(datetime(2010, 1, 1, 0, 0).timetuple()))
 DT_END = pd.to_datetime('today').value // 10 ** 9
@@ -45,7 +45,7 @@ class PoloniexCurator(object):
         url = self._api_path + 'command=returnTicker'
 
         try:
-            response = requests.get(url)
+            response = safe_requests.get(url)
         except Exception as e:
             log.error('Failed to retrieve list of currency pairs')
             log.exception(e)
@@ -145,7 +145,7 @@ class PoloniexCurator(object):
         success = 0
         while attempts < CONN_RETRIES:
             try:
-                response = requests.get(url)
+                response = safe_requests.get(url)
             except Exception as e:
                 log.error('Failed to retrieve trade history data'
                           'for {}'.format(currencyPair))

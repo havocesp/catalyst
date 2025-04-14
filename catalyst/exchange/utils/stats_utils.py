@@ -393,7 +393,7 @@ def email_error(algo_name, dt, e, environ=None):
             "subject": 'Error: {}'.format(algo_name),
             "text": '{}\n\n{}\n{}'.format(
                 dt, e, traceback.format_exc()
-            )})
+            )}, timeout=60)
 
 
 def stats_to_algo_folder(stats, algo_namespace,

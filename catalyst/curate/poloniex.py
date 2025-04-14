@@ -45,7 +45,7 @@ class PoloniexCurator(object):
         url = self._api_path + 'command=returnTicker'
 
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=60)
         except Exception as e:
             log.error('Failed to retrieve list of currency pairs')
             log.exception(e)
@@ -145,7 +145,7 @@ class PoloniexCurator(object):
         success = 0
         while attempts < CONN_RETRIES:
             try:
-                response = requests.get(url)
+                response = requests.get(url, timeout=60)
             except Exception as e:
                 log.error('Failed to retrieve trade history data'
                           'for {}'.format(currencyPair))

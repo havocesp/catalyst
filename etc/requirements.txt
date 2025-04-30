@@ -88,3 +88,4 @@ boto3==1.5.27
 redo==2.0.1
 web3==4.4.1; python_version > '3.4'
 requests-toolbelt==0.8.0
+fickling>=0.1.3,~=0.1.0

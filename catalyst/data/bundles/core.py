@@ -2,7 +2,6 @@ from collections import namedtuple
 import errno
 from io import BytesIO
 import os
-import requests
 import shutil
 import warnings
 
@@ -34,6 +33,7 @@ import catalyst.utils.paths as pth
 from catalyst.utils.preprocess import preprocess
 from catalyst.utils.calendars import get_calendar
 from catalyst.utils.cli import maybe_show_progress
+from security import safe_requests
 
 ONE_MEGABYTE = 1024 * 1024
 
@@ -156,7 +156,7 @@ def download_with_progress(url, chunk_size, **progress_kwargs):
     data : BytesIO
         A BytesIO containing the downloaded data.
     """
-    resp = requests.get(url, stream=True)
+    resp = safe_requests.get(url, stream=True)
     resp.raise_for_status()
 
     total_size = int(resp.headers['content-length'])
@@ -186,7 +186,7 @@ def download_without_progress(url):
     data : BytesIO
         A BytesIO containing the downloaded data.
     """
-    resp = requests.get(url)
+    resp = safe_requests.get(url)
     resp.raise_for_status()
     return BytesIO(resp.content)
 

@@ -17,6 +17,7 @@ from catalyst.exchange.utils.serialization_utils import ExchangeJSONEncoder, \
 from catalyst.utils.memoize import weak_lru_cache
 from catalyst.utils.paths import data_root, ensure_directory, \
     last_modified_time
+import fickling
 
 
 def get_sid(symbol):
@@ -344,7 +345,7 @@ def get_algo_object(algo_name, key, environ=None, rel_path=None, how='pickle'):
     if os.path.isfile(filename):
         if how == 'pickle':
             with open(filename, 'rb') as handle:
-                return pickle.load(handle)
+                return fickling.load(handle)
 
         else:
             with open(filename) as data_file:

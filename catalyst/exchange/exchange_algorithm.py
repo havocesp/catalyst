@@ -11,7 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import copy
-import pickle
 import signal
 import sys
 from datetime import timedelta
@@ -52,6 +51,7 @@ from catalyst.utils.input_validation import error_keywords, ensure_upper_case
 from catalyst.utils.math_utils import round_nearest
 from catalyst.utils.preprocess import preprocess
 from redo import retry
+import fickling
 
 log = logbook.Logger('exchange_algorithm', level=LOG_LEVEL)
 
@@ -483,7 +483,7 @@ class ExchangeTradingAlgorithmLive(ExchangeTradingAlgorithmBase):
                 filename = join(folder, item)
 
                 with open(filename, 'rb') as handle:
-                    perf_period = pickle.load(handle)
+                    perf_period = fickling.load(handle)
                     period_stats_list.extend(perf_period)
 
             stats = pd.DataFrame(period_stats_list)
